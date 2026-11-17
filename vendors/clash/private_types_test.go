@@ -136,7 +136,7 @@ func TestPrivateVendorTypesAcceptedByWhitelist(t *testing.T) {
 			want: interfaces.Oppa,
 		},
 		{
-			name: "xhttp",
+			name: "xhttp plain",
 			mapping: map[string]any{
 				"name":     "XHttp fixture",
 				"type":     "xhttp",
@@ -145,6 +145,57 @@ func TestPrivateVendorTypesAcceptedByWhitelist(t *testing.T) {
 				"password": "secret:0f1e2d3c4b5a69788796a5b4c3d2e1f0",
 			},
 			want: interfaces.XHttp,
+		},
+		{
+			// The vendor's own xhttp nodes carry a gateway endpoint; the core
+			// renders those as "Heysocks". A plain xhttp node without the
+			// gateway marker stays "Xhttp" (the case above), so the two
+			// identities are deliberately kept side by side.
+			name: "heysocks gateway",
+			mapping: map[string]any{
+				"name":     "Heysocks fixture",
+				"type":     "xhttp",
+				"server":   "192.0.2.10",
+				"port":     443,
+				"password": "secret:0f1e2d3c4b5a69788796a5b4c3d2e1f0",
+				"gateway":  "gateway.example:443",
+			},
+			want: interfaces.Heysocks,
+		},
+		{
+			// anytls plus the vendor xhttp transport is the dedicated-line
+			// shape, which the core renders as "Shanlian".
+			name: "shanlian anytls xhttp transport",
+			mapping: map[string]any{
+				"name":             "Shanlian express fixture",
+				"type":             "anytls",
+				"server":           "198.51.100.7",
+				"port":             6504,
+				"password":         "00000000000000000000000000000000",
+				"sni":              "mirror.example.com",
+				"skip-cert-verify": true,
+				"transport":        "xhttp",
+				"xhttp-opts": map[string]any{
+					"path":     "/rpcv2",
+					"mode":     "stream-up",
+					"obfs-key": "synthetic-key",
+				},
+			},
+			want: interfaces.Shanlian,
+		},
+		{
+			// A plain anytls node (no transport block) must keep reporting
+			// "AnyTLS" even with a 32-hex password and no "#sl" marker.
+			name: "anytls plain",
+			mapping: map[string]any{
+				"name":     "AnyTLS fixture",
+				"type":     "anytls",
+				"server":   "198.51.100.8",
+				"port":     443,
+				"password": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+				"sni":      "www.example.com",
+			},
+			want: interfaces.AnyTLS,
 		},
 		{
 			// The kernel renders this adapter as "SNTP", not "SNTPEclipse".

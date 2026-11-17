@@ -38,6 +38,10 @@ const (
 	Ninja      ProxyType = "Ninja"
 	Oppa       ProxyType = "Oppa"
 	XHttp      ProxyType = "XHttp"
+	// Heysocks is the core's site identity for the vendor's own `type: xhttp`
+	// nodes (the ones carrying a gateway endpoint). Plain xhttp nodes keep
+	// reporting Xhttp, so the two entries coexist on purpose.
+	Heysocks   ProxyType = "Heysocks"
 	Shanlian   ProxyType = "Shanlian"
 	Fastup     ProxyType = "Fastup"
 	ViewTurbo  ProxyType = "ViewTurbo"
@@ -59,7 +63,7 @@ const (
 var AllProxyTypes = []ProxyType{
 	Shadowsocks, ShadowsocksR, Snell, Socks5, Http, Vmess, Trojan,
 	Vless, Hysteria, Hysteria2, TUIC, Wireguard, SSH, Mieru, AnyTLS, Sudoku, Masque, TrustTunnel, GostRelay, ShadowQuic, X365, Miu,
-	Ninja, Oppa, XHttp, Shanlian, Fastup, ViewTurbo, Blackstone, OIX, Juzi, Pure, SNTP,
+	Ninja, Oppa, XHttp, Heysocks, Shanlian, Fastup, ViewTurbo, Blackstone, OIX, Juzi, Pure, SNTP,
 	OpenVPN,
 }
 

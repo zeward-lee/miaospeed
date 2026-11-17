@@ -162,7 +162,7 @@ replace github.com/miaokobot/miaospeed v0.0.0-20230313132009-0234a01d9daa => git
 // Our own core: Clash.Meta v1.19.34 baseline + 48 private protocol patches,
 // published as a tagged fork. The tag pins the exact commit, so a fresh clone
 // builds the same code without any local checkout.
-replace github.com/metacubex/mihomo => github.com/zeward-lee/Clash.Meta v1.19.34-feebox.1
+replace github.com/metacubex/mihomo => github.com/zeward-lee/Clash.Meta v1.19.34-feebox.2
 
 // The core's own replace of sing-shadowsocks2 (ViewTurbo/Blackstone variants)
 // is ignored for dependencies, so it has to be repeated here.
